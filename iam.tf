@@ -14,6 +14,25 @@ resource "aws_iam_role" "codebuild-role" {
   })
 }
 
+resource "aws_iam_role" "eks-iam-role" {
+ name = "devops-eks-iam-role"
+
+ path = "/"
+
+ assume_role_policy = <<EOF
+{
+ "Version": "2012-10-17",
+ "Statement": [
+  {
+   "Effect": "Allow",
+   "Principal": {
+    "Service": "eks.amazonaws.com"
+   },
+   "Action": "sts:AssumeRole"
+  }
+ ]
+}
+
 resource "aws_iam_role_policy" "codebuild-policy" {
   role = "${aws_iam_role.codebuild-role.name}"
 
